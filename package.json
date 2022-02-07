@@ -1,0 +1,27 @@
+{
+  "name": "gerenciamento-ingressos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosMendesDev/gerenciamento-ingressos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CarlosMendesDev/gerenciamento-ingressos/issues"
+  },
+  "homepage": "https://github.com/CarlosMendesDev/gerenciamento-ingressos#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "heroku": "^7.59.2",
+    "sequelize": "^6.15.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
