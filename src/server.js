@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import server from './app.js';
-import sequelize from './service/DatabaseConnection.js';
-import './model/Event.js';
-import './model/User.js';
-import './model/Ticket.js';
+import sequelize from './services/DatabaseConnection.js';
+import './models/Event.js';
+import './models/User.js';
+import './models/Ticket.js';
 
 sequelize.sync().catch((err) => {
   console.log(err);
