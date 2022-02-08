@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,7 @@
   "homepage": "https://github.com/CarlosMendesDev/gerenciamento-ingressos#readme",
   "dependencies": {
     "express": "^4.17.2",
-    "heroku": "^7.59.2",
+    "pg": "^8.7.3",
     "sequelize": "^6.15.1"
   },
   "devDependencies": {
