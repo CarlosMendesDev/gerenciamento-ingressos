@@ -1,14 +1,17 @@
 import User from '../models/User.js';
+import bcrypt from 'bcrypt';
 
 class UserController {
   async save(req, res) {
     const { name, user_login, user_password } = req.body
 
+    const password = await bcrypt.hash(user_password, 10);
+
     try {
       const user = await User.create({
         name,
         user_login,
-        user_password
+        user_password: password
       });
 
       res.status(201).json({
@@ -20,15 +23,18 @@ class UserController {
     };
   };
 
-  async listByLogin(req, res) {
-    const { user_login } = req.params;
+  async listById(req, res) {
+    const { id_user } = req.params;
 
     try {
-      const user = await User.findOne({ where: { user_login } });
+      const user = await User.findOne({ where: { id_user } });
 
       if (!user) throw new Error('User not found');
 
-      res.status(200).json(user);
+      res.status(200).json({
+        name: user.name,
+        user_login: user.user_login
+      });
     } catch (error) {
       res.status(404).json({
         message: error.message,
