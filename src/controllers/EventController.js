@@ -12,7 +12,7 @@ class EventController {
 
       res.status(201).json({
         message: 'CREATED',
-        event: event
+        event
       });
     } catch (error) {
       res.status(500);
@@ -65,7 +65,7 @@ class EventController {
 
       res.status(200).json({
         message: 'UPDATED',
-        event: event
+        event
       });
     } catch (error) {
       res.status(404).json({
