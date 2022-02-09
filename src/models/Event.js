@@ -9,7 +9,8 @@ const Event = sequelize.define('Event', {
     primaryKey: true
   },
   type_event: Sequelize.STRING,
-  name_event: Sequelize.STRING
+  name_event: Sequelize.STRING,
+  max_capacity: Sequelize.INTEGER
 });
 
 export default Event;
