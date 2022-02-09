@@ -20,7 +20,7 @@ class UserController {
     };
   };
 
-  async list(req, res) {
+  async listByLogin(req, res) {
     const { user_login } = req.params;
 
     try {
