@@ -15,9 +15,15 @@ class TicketController {
 
       if (!event) throw new Error('Event not found');
 
+      const { count } = await Ticket.findAndCountAll({ where: { id_event } });
+
+      if (count === event.max_capacity) throw new Error('Maximum capacity reached');
+
       const ticket = await Ticket.create({
         id_event: event.id_event,
         id_user: user.id_user,
+        UserIdUser: user.id_user,
+        EventIdEvent: event.id_event,
         desc_ticket,
         price_ticket,
       });
