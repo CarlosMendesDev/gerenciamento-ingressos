@@ -1,11 +1,12 @@
 import express from 'express';
-import router from './routes/EventRoutes.js'
+import routerEvents from './routes/EventRoutes.js'
+import routerUsers from './routes/UserRoutes.js'
 
 class App {
   constructor() {
     this.server = express();
     this.server.use(express.json());
-    this.server.use(router);
+    this.server.use([routerEvents, routerUsers]);
   };
 };
 
