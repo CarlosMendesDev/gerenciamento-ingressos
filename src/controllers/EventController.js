@@ -2,12 +2,13 @@ import Event from "../models/Event.js";
 
 class EventController {
   async save(req, res) {
-    const { type_event, name_event } = req.body
+    const { type_event, name_event, max_capacity } = req.body
 
     try {
       const event = await Event.create({
         name_event,
-        type_event
+        type_event,
+        max_capacity,
       });
 
       res.status(201).json({
@@ -37,7 +38,7 @@ class EventController {
 
       if (!event) throw new Error('Event not found');
 
-      await event.destroy();
+      await event.destroy({ cascade: true });
 
       res.status(200).json({
         message: 'DELETED',
@@ -51,7 +52,7 @@ class EventController {
 
   async updateById(req, res) {
     const { id_event } = req.params;
-    const { type_event, name_event } = req.body;
+    const { type_event, name_event, max_capacity } = req.body;
 
     try {
       const event = await Event.findOne({ where: { id_event } });
@@ -60,7 +61,8 @@ class EventController {
 
       await event.update({
         name_event: name_event || event.name_event,
-        type_event: type_event || event.type_event
+        type_event: type_event || event.type_event,
+        max_capacity: max_capacity || event.max_capacity
       });
 
       res.status(200).json({

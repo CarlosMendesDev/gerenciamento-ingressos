@@ -44,7 +44,7 @@ class UserController {
 
       if (!user) throw new Error('User not found');
 
-      await user.destroy();
+      await user.destroy({ cascade: true });
 
       res.status(200).json({
         message: 'DELETED',
