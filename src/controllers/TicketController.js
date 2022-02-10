@@ -49,7 +49,14 @@ class TicketController {
 
       if (!user) throw new Error('User not found');
 
-      const tickets = await Ticket.findAll({ where: { id_user } });
+      const tickets = await Ticket.findAll({
+        raw: true,
+        include: [{
+          model: Event,
+          required: true,
+          attributes: ['name_event'],
+        }]
+      });
 
       if (!tickets) throw new Error('Tickets not found');
 
