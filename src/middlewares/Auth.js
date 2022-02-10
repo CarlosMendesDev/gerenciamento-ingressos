@@ -13,7 +13,7 @@ class Auth {
 
       const decoded = jwt.decode(token, process.env.JWT_KEY);
 
-      res.decoded = { id_user: decoded.iss };
+      req.decoded = { id_user: decoded.iss };
 
       next();
     } catch (error) {
