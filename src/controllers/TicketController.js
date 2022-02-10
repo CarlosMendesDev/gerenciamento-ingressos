@@ -4,10 +4,12 @@ import Event from '../models/Event.js';
 
 class TicketController {
   async save(req, res) {
-    const { user_login, id_event, desc_ticket, price_ticket } = req.body
+    const { id_event, desc_ticket, price_ticket } = req.body
+
+    const { id_user } = req.decoded;
 
     try {
-      const user = await User.findOne({ where: { user_login } });
+      const user = await User.findOne({ where: { id_user } });
 
       if (!user) throw new Error('User not found');
 
@@ -21,8 +23,8 @@ class TicketController {
 
       const ticket = await Ticket.create({
         id_event: event.id_event,
-        id_user: user.id_user,
-        UserIdUser: user.id_user,
+        id_user,
+        UserIdUser: id_user,
         EventIdEvent: event.id_event,
         desc_ticket,
         price_ticket,
@@ -39,15 +41,15 @@ class TicketController {
     };
   };
 
-  async listByLogin(req, res) {
-    const { user_login } = req.params;
+  async listById(req, res) {
+    const { id_user } = req.decoded;
 
     try {
-      const user = await User.findOne({ where: { user_login } });
+      const user = await User.findOne({ where: { id_user } });
 
       if (!user) throw new Error('User not found');
 
-      const tickets = await Ticket.findAll({ where: { id_user: user.id_user } });
+      const tickets = await Ticket.findAll({ where: { id_user } });
 
       if (!tickets) throw new Error('Tickets not found');
 
@@ -60,15 +62,17 @@ class TicketController {
   };
 
   async deleteById(req, res) {
-    const { user_login, id_ticket } = req.params;
+    const { id_ticket } = req.params;
+
+    const { id_user } = req.decoded;
 
     try {
-      const user = await User.findOne({ where: { user_login } });
+      const user = await User.findOne({ where: { id_user } });
 
       if (!user) throw new Error('User not found');
 
       const ticket = await Ticket.findOne({ where: {
-        id_user: user.id_user,
+        id_user,
         id_ticket
       } });
 

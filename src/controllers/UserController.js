@@ -24,7 +24,7 @@ class UserController {
   };
 
   async listById(req, res) {
-    const { id_user } = req.params;
+    const { id_user } = req.decoded;
 
     try {
       const user = await User.findOne({ where: { id_user } });
@@ -43,7 +43,7 @@ class UserController {
   };
 
   async deleteById(req, res) {
-    const { id_user } = req.params;
+    const { id_user } = req.decoded;
 
     try {
       const user = await User.findOne({ where: { id_user } });
@@ -63,7 +63,7 @@ class UserController {
   };
 
   async updateById(req, res) {
-    const { id_user } = req.params;
+    const { id_user } = req.decoded;
     const { name, user_login, user_password } = req.body;
 
     try {
@@ -71,10 +71,14 @@ class UserController {
 
       if (!user) throw new Error('User not found');
 
+      const password = !user_password
+        ? await bcrypt.hash(user_password, 10)
+        : user.user_password;
+
       await user.update({
         name: name || user.name,
         user_login: user_login || user.user_login,
-        user_password: user_password || user.user_password
+        user_password: password
       });
 
       res.status(200).json({
