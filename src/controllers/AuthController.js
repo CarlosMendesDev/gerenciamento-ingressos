@@ -11,7 +11,7 @@ class AuthController {
 
       const user = await User.findOne({ where: { user_login } });
 
-      if (!user) throw { msg: 'Event not found', status: 404 };
+      if (!user) throw { msg: 'User not found', status: 404 };
 
       const isValidPassword = await bcrypt.compare(user_password, user.user_password);
 
