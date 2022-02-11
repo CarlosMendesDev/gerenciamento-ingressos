@@ -2,9 +2,11 @@ import Event from "../models/Event.js";
 
 class EventController {
   async save(req, res) {
-    const { type_event, name_event, max_capacity } = req.body
+    const { type_event, name_event, max_capacity } = req.body;
 
     try {
+      if (!type_event || !name_event || !max_capacity) throw { msg: 'Bad request', status: 500 };
+
       const event = await Event.create({
         name_event,
         type_event,
@@ -13,7 +15,7 @@ class EventController {
 
       res.status(201).json({
         message: 'CREATED',
-        event
+        event,
       });
     } catch (error) {
       res.status(500);
@@ -24,9 +26,13 @@ class EventController {
     try {
       const event = await Event.findAll();
 
+      if (!event) throw { msg: 'Events not found', status: 404 };
+
       res.status(200).json(event);
     } catch (error) {
-      res.status(500);
+      res.status(error?.status || 500).json({
+        message: error?.msg || error,
+      });;
     };
   };
 
@@ -34,9 +40,11 @@ class EventController {
     const { id_event } = req.params;
 
     try {
+      if (!id_event) throw { msg: 'Bad request', status: 500 };
+
       const event = await Event.findOne({ where: { id_event } });
 
-      if (!event) throw new Error('Event not found');
+      if (!event) throw { msg: 'Event not found', status: 404 };
 
       await event.destroy({ cascade: true });
 
@@ -44,8 +52,8 @@ class EventController {
         message: 'DELETED',
       });
     } catch (error) {
-      res.status(404).json({
-        message: error.message,
+      res.status(error?.status || 500).json({
+        message: error?.msg || error,
       });
     };
   };
@@ -55,23 +63,25 @@ class EventController {
     const { type_event, name_event, max_capacity } = req.body;
 
     try {
+      if (!id_event) throw { msg: 'Bad request', status: 500 };
+
       const event = await Event.findOne({ where: { id_event } });
 
-      if (!event) throw new Error('Event not found');
+      if (!event) throw { msg: 'Event not found', status: 404 };
 
       await event.update({
         name_event: name_event || event.name_event,
         type_event: type_event || event.type_event,
-        max_capacity: max_capacity || event.max_capacity
+        max_capacity: max_capacity || event.max_capacity,
       });
 
       res.status(200).json({
         message: 'UPDATED',
-        event
+        event,
       });
     } catch (error) {
-      res.status(404).json({
-        message: error.message,
+      res.status(error?.status || 500).json({
+        message: error?.msg || error,
       });
     };
   };

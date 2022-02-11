@@ -9,7 +9,7 @@ class Auth {
 
       const isValidToken = jwt.verify(token, process.env.JWT_KEY);
 
-      if(!isValidToken) throw new Error('Not Authorization');
+      if(!isValidToken) throw { msg: 'Not Authorization', status: 401 };
 
       const decoded = jwt.decode(token, process.env.JWT_KEY);
 
@@ -17,7 +17,7 @@ class Auth {
 
       next();
     } catch (error) {
-      res.status(404).json(error);
+      res.status(error?.status || 500).json(error?.msg || error);
     };
   };
 };
