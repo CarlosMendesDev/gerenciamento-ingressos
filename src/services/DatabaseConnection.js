@@ -7,9 +7,9 @@ const sequelize = new Sequelize(process.env.DATABASE_URI,
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false
-    }
-  }
+      rejectUnauthorized: false,
+    },
+  },
 });
 
 export default sequelize;

@@ -6,11 +6,11 @@ const Event = sequelize.define('Event', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   type_event: Sequelize.STRING,
   name_event: Sequelize.STRING,
-  max_capacity: Sequelize.INTEGER
+  max_capacity: Sequelize.INTEGER,
 });
 
 export default Event;

@@ -6,7 +6,7 @@ const Ticket = sequelize.define('Tickets', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   desc_ticket: Sequelize.STRING,
   price_ticket: Sequelize.DOUBLE,
